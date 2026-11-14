@@ -1,0 +1,27 @@
+{
+  "name": "اردو ناول اسٹوڈیو",
+  "short_name": "اردو ناول",
+  "description": "آف لائن اردو ناول لکھنے، محفوظ کرنے اور PDF بنانے کی ایپ",
+  "lang": "ur",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2eef5",
+  "theme_color": "#30204f",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

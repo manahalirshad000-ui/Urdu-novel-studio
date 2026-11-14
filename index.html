@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#30204f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png"><title>اردو ناول اسٹوڈیو</title>
+<style>
+:root{--purple:#4d2b78;--deep:#211b3c;--gold:#d6ad68;--paper:#fffdf9;--bg:#f2eef5;--line:#e4dce9;--ink:#28213b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq","Noto Naskh Arabic",serif}
+header{background:linear-gradient(110deg,#211b3c,#49306e 55%,#211b3c);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:3px solid var(--gold)}
+header h1{font-size:26px;margin:0;color:#f5d99e}header p{margin:0;color:#eee1f6}
+main{max-width:1400px;margin:18px auto;padding:0 14px;display:grid;grid-template-columns:245px minmax(0,1fr);gap:15px}
+.panel,.work{background:var(--paper);border:1px solid var(--line);border-radius:15px;box-shadow:0 4px 18px #211b3c0c;padding:15px;min-width:0}
+h2{font-size:19px;margin:0 0 10px;color:var(--purple)}h3{font-size:17px;margin:10px 0}
+input,textarea,button,select{font:inherit}input,select{border:1px solid var(--line);border-radius:9px;padding:9px;background:#fff;color:var(--ink);max-width:100%}
+button{border:0;border-radius:9px;padding:9px 13px;background:var(--purple);color:#fff;cursor:pointer}button.secondary{background:#eee8f3;color:var(--deep)}button.gold{background:#f3e3c5;color:#503c1c}button.red{background:#954b56}button:disabled{opacity:.45;cursor:not-allowed}
+.full{width:100%}.stack{display:grid;gap:8px}.novel-list{display:grid;gap:7px;margin-top:12px}.novel-item{width:100%;text-align:right;background:#f0eaf4;color:var(--deep);display:flex;justify-content:space-between;align-items:center}.novel-item.active{outline:2px solid #a68bc1;background:#e4d6ef}
+small,.muted{color:#766d7c;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.worktop{display:grid;grid-template-columns:minmax(150px,1fr) auto auto;gap:8px;align-items:center}.worktop input{width:100%}
+.modebar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.modebar button.selected{background:#2c1d48;outline:2px solid #b99bd2}
+.editor-layout{display:grid;grid-template-columns:205px minmax(0,1fr) 250px;gap:10px}
+.chapter-panel,.gallery-panel{border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
+.chapter-list{display:grid;gap:6px;margin-top:8px}.chapter-item{background:#f2edf5;color:var(--deep);text-align:right}.chapter-item.active{background:#dfd0eb;outline:1px solid #a78bbd}
+#chapterName{width:100%;margin:6px 0}.toolbar{display:flex;gap:6px;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;padding:7px;margin-bottom:8px;background:#faf7fc}.toolbar button{padding:5px 9px;background:#eee8f3;color:var(--deep)}
+#editor{min-height:430px;border:1px solid var(--line);border-radius:11px;background:#fff;padding:18px 20px;outline-color:#9b79b7;line-height:2.15;font-size:18px;overflow-wrap:anywhere}
+#editor img{max-width:90%;height:auto;display:block;margin:14px auto;border-radius:9px;box-shadow:0 3px 12px #0002}
+.editor-meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:7px}
+.gallery-tabs{display:flex;gap:5px;flex-wrap:wrap}.gallery-tabs button{font-size:13px;padding:6px 8px}.gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px;max-height:470px;overflow:auto}
+.thumb{border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;color:var(--deep);padding:4px;text-align:center;font-size:12px}
+.thumb img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;display:block}.thumb button{font-size:12px;padding:4px 6px;margin-top:4px;width:100%}
+.idea-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.idea{background:#fbf7fd;border:1px solid var(--line);border-radius:10px;padding:10px}.idea strong{display:block;color:#4b2b71}.idea p{font-size:13px;line-height:1.8;margin:5px 0}.idea button{font-size:12px;padding:5px 8px}
+.cover-preview{position:relative;overflow:hidden;border-radius:12px;margin:10px 0;background:#251c3c;color:white;min-height:180px;display:grid;place-items:center;text-align:center}.cover-preview img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0;opacity:.75}.cover-preview strong{position:relative;font-size:25px;text-shadow:0 2px 6px #000}
+footer{text-align:center;padding:15px;color:#756b7e;font-size:13px}
+@media(max-width:1050px){.editor-layout{grid-template-columns:180px minmax(0,1fr)}.gallery-panel{grid-column:1/-1}.gallery-grid{grid-template-columns:repeat(4,1fr);max-height:none}}
+@media(max-width:720px){main{grid-template-columns:1fr}.worktop{grid-template-columns:1fr 1fr}.worktop input{grid-column:1/-1}.editor-layout{grid-template-columns:1fr}.chapter-panel{order:2}.gallery-panel{order:3}.idea-grid{grid-template-columns:1fr 1fr}#editor{min-height:360px}}
+@media print{body{background:#fff}.no-print,header,aside,footer{display:none!important}main{display:block;margin:0;padding:0}.work{border:0;box-shadow:none;padding:0}.print-cover{page-break-after:always;height:95vh;display:grid;place-items:center;text-align:center;background-size:cover;background-position:center;color:#fff}.print-cover h1{font-size:38px;background:#20182b99;padding:20px}.print-chapter{page-break-before:always}.print-chapter h2{text-align:center}.print-chapter .body{line-height:2.2;font-size:17px}.print-chapter img{max-width:80%;height:auto;display:block;margin:18px auto}.print-single{line-height:2.2;font-size:17px}.print-single img{max-width:80%;display:block;margin:18px auto}}
+</style></head>
+<body>
+<header><div><h1>اردو ناول اسٹوڈیو</h1><p>لکھیں، تخلیق کریں، محفوظ رکھیں — انٹرنیٹ کے بغیر بھی</p></div><div>🟢 Offline Mode</div></header>
+<main>
+<aside class="panel no-print">
+<h2>📚 میرے ناول</h2>
+<div class="stack"><input id="newName" placeholder="نئے ناول کا نام"><button id="createNovel" class="full">＋ نیا ناول بنائیں</button></div>
+<div id="novelList" class="novel-list"></div>
+<hr style="border:0;border-top:1px solid var(--line);margin:15px 0">
+<h3>🗂️ بیک اپ</h3>
+<div class="stack"><button class="secondary" id="backup">بیک اپ ڈاؤن لوڈ کریں</button><button class="secondary" id="restore">بیک اپ واپس لائیں</button><input id="backupFile" type="file" accept=".json" hidden></div>
+<p class="muted">ناول اسی براؤزر اور ڈیوائس میں محفوظ رہتے ہیں۔ اپنا بیک اپ الگ سے ضرور رکھیں۔</p>
+</aside>
+<section class="work">
+<div class="worktop no-print"><input id="novelTitle" placeholder="ناول کا عنوان"><button id="save">💾 محفوظ کریں</button><button id="pdf">PDF بنائیں</button></div>
+<div class="modebar no-print"><button id="chapterMode" class="selected">باب وار لکھیں</button><button id="freeMode">بغیر ابواب کے لکھیں</button><button id="txt">TXT ڈاؤن لوڈ</button><button id="deleteNovel" class="red">ناول حذف کریں</button></div>
+<div class="editor-layout">
+<section class="chapter-panel no-print" id="chapterPanel"><h2>ابواب</h2><button id="addChapter" class="full gold">＋ نیا باب</button><div id="chapterList" class="chapter-list"></div><div class="actions"><button id="renameChapter" class="secondary">نام بدلیں</button><button id="deleteChapter" class="secondary">حذف</button></div></section>
+<section>
+<div class="no-print"><input id="chapterName" placeholder="باب کا عنوان"></div>
+<div class="toolbar no-print">
+<button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-cmd="underline"><u>U</u></button><button data-cmd="justifyRight">دائیں</button><button data-cmd="justifyCenter">درمیان</button><button data-cmd="insertUnorderedList">• فہرست</button><button id="clearFormat">فارمیٹ ختم</button>
+</div>
+<div id="editor" contenteditable="true" dir="rtl" aria-label="ناول لکھنے کی جگہ"><p>یہاں اپنی کہانی لکھنا شروع کریں…</p></div>
+<div class="editor-meta"><span class="muted" id="wordCount">الفاظ: 0</span><span class="muted" id="saveStatus">خودکار محفوظ کاری فعال ہے</span></div>
+</section>
+<aside class="gallery-panel no-print">
+<h2>🖼️ تصویری گیلری</h2>
+<div class="gallery-tabs"><button id="scenesTab" class="selected">مناظر</button><button id="coversTab" class="secondary">ناول کور</button></div>
+<div id="gallery" class="gallery-grid"></div>
+<div id="coverPreview" class="cover-preview"><img id="coverImg" src="assets/scene2.jpg"><strong id="coverText">ناول کا عنوان</strong></div>
+<button id="useCover" class="full">یہ کور منتخب کریں</button>
+</aside>
+</div>
+<section class="no-print" style="margin-top:16px;border-top:1px solid var(--line);padding-top:14px">
+<h2>💡 ناول کے آئیڈیاز اور عنوانات</h2><p class="muted">کسی خیال کو منتخب کریں؛ عنوان ناول میں لگ جائے گا اور کہانی کا ابتدائی خاکہ ایڈیٹر میں شامل ہو جائے گا۔</p>
+<div id="ideas" class="idea-grid"></div>
+</section>
+</section>
+</main>
+<footer>اردو ناول اسٹوڈیو · آپ کی تحریر آپ کے اپنے کمپیوٹر میں محفوظ رہتی ہے</footer>
+<script>
+const $=id=>document.getElementById(id), KEY='urduNovelStudio.v2';
+const pictures=[
+ ['scene1.jpg','پہاڑی جھیل'],['scene2.jpg','غروبِ آفتاب'],['scene3.jpg','پھولوں کی راہ'],['scene4.jpg','سرسبز جنگل'],
+ ['scene5.jpg','پرانا شہر'],['scene6.jpg','بارش کی شام'],['scene7.jpg','سمندر کا کنارا'],['scene8.jpg','جنگل کا گھر']
+];
+const ideas=[
+ ['خاموش راستے','ایک نوجوان اپنے خاندان کے ماضی کا راز جاننے کے لیے آبائی گاؤں لوٹتا ہے، جہاں ہر شخص کی خاموشی ایک نئی کہانی چھپائے ہوئے ہے۔'],
+ ['خوابوں کی دہلیز','ایک طالبہ اپنی ڈائری میں لکھے خوابوں اور حقیقی زندگی کے واقعات کے درمیان حیرت انگیز مماثلت محسوس کرتی ہے۔'],
+ ['آخری خط','برسوں پرانا خط دو خاندانوں کے درمیان غلط فہمی دور کرنے اور بچھڑے رشتوں کو سمجھنے کا ذریعہ بنتا ہے۔'],
+ ['بارش کے بعد','ایک چھوٹے شہر میں نئی لائبریری کھلتی ہے جہاں مختلف لوگوں کی کہانیاں ایک دوسرے سے جڑنے لگتی ہیں۔'],
+ ['چاندنی کا سفر','دو اجنبی ایک ادبی سفر کے دوران دوستی، اعتماد اور اپنی منزل کا نیا مطلب دریافت کرتے ہیں۔'],
+ ['ادھوری تصویر','ایک پرانی تصویر میں نظر آنے والی جگہ ایک نوجوان مصور کو اپنے خاندان کی بھولی ہوئی تاریخ تک لے جاتی ہے۔'],
+ ['دھوپ کا ایک ٹکڑا','مشکلات سے گزرنے والا خاندان چھوٹی چھوٹی کامیابیوں اور باہمی تعاون سے نئی شروعات کرتا ہے۔'],
+ ['نیلے دروازے والا گھر','ایک خالی گھر کی دیکھ بھال کرتے ہوئے ایک لڑکی کو اس کے سابق مکینوں کی یادداشتیں ملتی ہیں۔'],
+ ['خوابوں کی کتاب','ایک کتاب فروش کو ایسی تحریریں ملتی ہیں جو پڑھنے والوں کو اپنے فیصلوں پر دوبارہ غور کرنے پر آمادہ کرتی ہیں۔']
+];
+let state=read(), current=state.current||null, selectedChapter=null, mode='chapters', selectedCover='scene2.jpg', galleryMode='scenes', timer=null;
+function read(){try{return JSON.parse(localStorage.getItem(KEY))||{novels:[],current:null}}catch(e){return {novels:[],current:null}}}
+function id(){return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function novel(){return state.novels.find(n=>n.id===current)}
+function chapter(){let n=novel();return n&&n.chapters.find(c=>c.id===selectedChapter)}
+function activeDoc(){let n=novel();return n&&(mode==='free'?n.freeDoc:chapter()?.html)||''}
+function persist(msg='محفوظ ہو گیا ✓'){state.current=current;localStorage.setItem(KEY,JSON.stringify(state));$('saveStatus').textContent=msg}
+function sync(){let n=novel();if(!n)return;n.title=$('novelTitle').value;n.cover=selectedCover;if(mode==='free')n.freeDoc=$('editor').innerHTML;else{let c=chapter();if(c){c.title=$('chapterName').value;c.html=$('editor').innerHTML}}}
+function schedule(){ $('saveStatus').textContent='محفوظ کیا جا رہا ہے…';clearTimeout(timer);timer=setTimeout(()=>{sync();persist()},450)}
+function render(){
+ $('novelList').innerHTML='';
+ state.novels.forEach(n=>{let b=document.createElement('button');b.className='novel-item'+(n.id===current?' active':'');b.innerHTML=`<span>${esc(n.title||'بلا عنوان')}</span><span>📖</span>`;b.onclick=()=>{sync();current=n.id;selectedChapter=n.chapters[0]?.id||null;mode='chapters';render()};$('novelList').append(b)});
+ let n=novel();$('novelTitle').value=n?.title||'';selectedCover=n?.cover||selectedCover;
+ $('chapterPanel').style.display=mode==='chapters'?'block':'none';$('chapterMode').classList.toggle('selected',mode==='chapters');$('freeMode').classList.toggle('selected',mode==='free');
+ $('chapterName').style.display=mode==='chapters'?'block':'none';
+ $('chapterList').innerHTML='';
+ if(n){n.chapters.forEach((c,i)=>{let b=document.createElement('button');b.className='chapter-item'+(c.id===selectedChapter?' active':'');b.textContent=c.title||`باب ${i+1}`;b.onclick=()=>{sync();selectedChapter=c.id;render()};$('chapterList').append(b)})}
+ $('chapterName').value=chapter()?.title||'';
+ $('editor').innerHTML=activeDoc()||'<p></p>';
+ $('coverImg').src='assets/'+selectedCover;$('coverText').textContent=n?.title||'ناول کا عنوان';
+ updateWords();renderGallery();renderIdeas();
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function updateWords(){let t=$('editor').innerText.trim();$('wordCount').textContent='الفاظ: '+(t?t.split(/\s+/).length:0)}
+function renderGallery(){let g=$('gallery');g.innerHTML='';pictures.forEach(([file,label],i)=>{let d=document.createElement('div');d.className='thumb';d.innerHTML=`<img src="assets/${file}" alt="${label}"><div>${label}</div><button>${galleryMode==='scenes'?'متن میں شامل کریں':'کور منتخب کریں'}</button>`;d.querySelector('button').onclick=()=>{if(galleryMode==='scenes'){let html=`<p><img src="assets/${file}" alt="${label}"></p><p></p>`;$('editor').focus();document.execCommand('insertHTML',false,html);schedule()}else{selectedCover=file;$('coverImg').src='assets/'+file;sync();persist('کور منتخب ہو گیا')}};g.append(d)})}
+function renderIdeas(){let box=$('ideas');box.innerHTML='';ideas.forEach(([title,desc])=>{let d=document.createElement('div');d.className='idea';d.innerHTML=`<strong>${title}</strong><p>${desc}</p><button>اس خیال کو استعمال کریں</button>`;d.querySelector('button').onclick=()=>{if(!novel())createNovel(title);$('novelTitle').value=title;let add=`<h2>${title}</h2><p><b>کہانی کا ابتدائی خیال:</b> ${desc}</p><p>یہاں سے اپنی کہانی آگے بڑھائیں…</p>`;$('editor').focus();document.execCommand('insertHTML',false,add);sync();persist('ناول کا خیال شامل ہو گیا');$('coverText').textContent=title};box.append(d)})}
+function createNovel(name){let n={id:id(),title:name,cover:selectedCover,chapters:[{id:id(),title:'باب 1',html:'<p></p>'}],freeDoc:'<p></p>'};state.novels.push(n);current=n.id;selectedChapter=n.chapters[0].id;persist();return n}
+$('createNovel').onclick=()=>{let name=$('newName').value.trim();if(!name){alert('ناول کا نام لکھیں۔');return}sync();createNovel(name);$('newName').value='';mode='chapters';render()};
+$('addChapter').onclick=()=>{sync();let n=novel();if(!n)return;let c={id:id(),title:`باب ${n.chapters.length+1}`,html:'<p></p>'};n.chapters.push(c);selectedChapter=c.id;render();persist()};
+$('renameChapter').onclick=()=>{let c=chapter();if(!c)return;let v=prompt('باب کا نیا نام',c.title);if(v!==null){c.title=v;render();persist()}};
+$('deleteChapter').onclick=()=>{let n=novel();if(!n||n.chapters.length<=1){alert('کم از کم ایک باب رکھنا ضروری ہے۔');return}if(confirm('یہ باب حذف کر دیں؟')){n.chapters=n.chapters.filter(c=>c.id!==selectedChapter);selectedChapter=n.chapters[0].id;render();persist()}};
+$('chapterMode').onclick=()=>{sync();mode='chapters';render()};$('freeMode').onclick=()=>{sync();mode='free';render()};
+$('novelTitle').oninput=()=>{schedule();$('coverText').textContent=$('novelTitle').value||'ناول کا عنوان'};
+$('chapterName').oninput=schedule;$('editor').addEventListener('input',()=>{schedule();updateWords()});
+document.querySelectorAll('[data-cmd]').forEach(b=>b.onclick=()=>{$('editor').focus();document.execCommand(b.dataset.cmd,false,null);schedule()});
+$('clearFormat').onclick=()=>{$('editor').focus();document.execCommand('removeFormat');schedule()};
+$('save').onclick=()=>{sync();persist('آپ کا ناول محفوظ ہو گیا ✓')};
+$('useCover').onclick=()=>{sync();persist('ناول کا سرورق منتخب ہو گیا')};
+$('scenesTab').onclick=()=>{galleryMode='scenes';$('scenesTab').className='';$('coversTab').className='secondary';renderGallery()};
+$('coversTab').onclick=()=>{galleryMode='covers';$('coversTab').className='';$('scenesTab').className='secondary';renderGallery()};
+function download(name,content,type){let a=document.createElement('a'),u=URL.createObjectURL(new Blob(['\ufeff',content],{type}));a.href=u;a.download=name.replace(/[\\/:*?"<>|]/g,'_');a.click();setTimeout(()=>URL.revokeObjectURL(u),1200)}
+$('txt').onclick=()=>{sync();let n=novel();if(!n)return;let text=n.title+'\n\n'+(mode==='free'?$('editor').innerText:n.chapters.map(c=>c.title+'\n\n'+htmlToText(c.html)).join('\n\n'));download((n.title||'Urdu-Novel')+'.txt',text,'text/plain;charset=utf-8')};
+function htmlToText(s){let d=document.createElement('div');d.innerHTML=s;return d.innerText}
+$('pdf').onclick=()=>{sync();let n=novel();if(!n){alert('پہلے نیا ناول بنائیں۔');return}persist();let w=window.open('','_blank');if(!w){alert('PDF کے لیے پاپ اپ کی اجازت دیں یا Ctrl+P دبائیں۔');return}
+let cover=n.cover||'scene2.jpg', content=mode==='free'?`<section class="print-single">${$('editor').innerHTML}</section>`:n.chapters.map(c=>`<section class="print-chapter"><h2>${esc(c.title)}</h2><div class="body">${c.html}</div></section>`).join('');
+if(mode==='chapters' && n.chapters.length>0) content=n.chapters.map(c=>`<section class="print-chapter"><h2>${esc(c.title)}</h2><div class="body">${c.html}</div></section>`).join('');
+w.document.write(`<!doctype html><html lang="ur" dir="rtl"><meta charset="utf-8"><title>${esc(n.title)}</title><style>body{font-family:serif;direction:rtl;text-align:right;padding:30px;line-height:2.1}.print-cover{page-break-after:always;height:92vh;display:grid;place-items:center;text-align:center;background:url('assets/${cover}') center/cover;color:white}.print-cover h1{font-size:38px;background:#241936bb;padding:20px}h2{text-align:center;margin:20px 0}.print-chapter{page-break-before:always}.print-chapter .body,.print-single{font-size:18px;line-height:2.2;white-space:normal}.print-chapter img,.print-single img{max-width:80%;height:auto;display:block;margin:20px auto;page-break-inside:avoid}@media print{.print-cover{height:95vh}}</style><div class="print-cover"><h1>${esc(n.title)}</h1></div>${content}</html>`);
+w.document.close();w.focus();setTimeout(()=>w.print(),700)};
+$('deleteNovel').onclick=()=>{if(!novel()||!confirm('یہ پورا ناول حذف کر دیں؟ پہلے بیک اپ بنائیں۔'))return;state.novels=state.novels.filter(n=>n.id!==current);current=state.novels[0]?.id||null;selectedChapter=novel()?.chapters[0]?.id||null;render();persist()};
+$('backup').onclick=()=>{sync();download('urdu-novel-backup.json',JSON.stringify(state,null,2),'application/json')};
+$('restore').onclick=()=>$('backupFile').click();
+$('backupFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.novels))throw 0;if(!confirm('موجودہ ناول بیک اپ سے بدل جائیں گے۔ جاری رکھیں؟'))return;state=d;current=state.current||state.novels[0]?.id||null;selectedChapter=novel()?.chapters[0]?.id||null;render();persist('بیک اپ بحال ہو گیا')}catch{alert('یہ درست بیک اپ فائل نہیں ہے۔')}e.target.value=''};
+if(!novel() && state.novels.length){current=state.novels[0].id}if(!novel()){createNovel('میرا پہلا ناول')}else{selectedChapter=novel().chapters[0]?.id||null}render();
+</script><script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+</body></html>
